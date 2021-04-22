@@ -26,7 +26,7 @@ export default {
   components: {TopBar},
   data(){
     return {
-      drawer: true
+      drawer: false
     }
   }
 }

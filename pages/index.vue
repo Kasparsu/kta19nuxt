@@ -1,36 +1,40 @@
 <template>
   <div>
-      <ul>
-        <li v-for="(message,index) in messages" :key="index"><v-chip>{{message}}</v-chip></li>
-      </ul>
-    <v-text-field v-model="message"></v-text-field><v-btn @click="send">Send</v-btn>
+    <div ref="map" id="map"></div>
+    <v-btn @click="goToTPT">Go to school</v-btn>
   </div>
 </template>
 
 <script>
+  import { Loader } from "@googlemaps/js-api-loader"
 export default {
   mounted(){
-    this.ws = new WebSocket('ws://localhost:8080');
-    this.ws.onopen = (message) => {
-      console.log('open:', message);
-    };
-    this.ws.onmessage = (message) => {
-      console.log('message:', message);
-      this.messages.push(message.data);
-    };
+    const loader = new Loader({
+      apiKey: "",
+      version: "weekly",
+    });
+    loader.load().then(() => {
+      this.map = new google.maps.Map(this.$refs['map'], {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 8,
+      });
+    });
   },
   data(){
     return {
-      messages: [],
-      message: '',
-      ws: null
+      map: null
     }
   },
   methods: {
-    send(){
-      this.ws.send(this.message);
-      this.message = '';
+    goToTPT(){
+      this.map.panTo({lat:59.4269337, lng:24.7428724});
+      this.map.setZoom(19);
     }
   }
 }
 </script>
+<style scoped>
+  #map {
+    height: 600px;
+  }
+</style>
