@@ -1,30 +1,29 @@
 <template>
   <div>
-    <g-map :lat="coords.lat" :lng="coords.lng" :zoom="myzoom"/>
-    <v-btn @click="goToTPT">Go to school</v-btn>
+      <v-row>
+        <v-col v-for="country in countries" :key="country.ID" cols="2">
+          <country :country="country"/>
+        </v-col>
+      </v-row>
   </div>
 </template>
 
 <script>
-
 export default {
+  created() {
+    this.$axios.$get('https://api.covid19api.com/summary').then((data) => {
+      console.log(data);
+      this.countries = data.Countries;
+    });
+  },
   data(){
     return {
-      map: null,
-      myzoom: 8,
-      coords: {lat:-34.397, lng:150.644}
+      countries: []
     }
   },
   methods: {
-    goToTPT(){
-      this.coords = {lat:59.4269337, lng:24.7428724};
-      this.myzoom = 19;
-    }
   }
 }
 </script>
 <style scoped>
-  #map {
-    height: 600px;
-  }
 </style>
