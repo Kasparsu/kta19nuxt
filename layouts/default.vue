@@ -1,6 +1,6 @@
 <template>
   <v-app id="inspire">
-    <top-bar></top-bar>
+    <top-bar @open-drawer="drawer = !drawer"></top-bar>
 
     <v-navigation-drawer
       v-model="drawer"
@@ -24,10 +24,8 @@
 import TopBar from "../components/TopBar";
 export default {
   components: {TopBar},
-  data(){
-    return {
+  data: () => ({
       drawer: false
-    }
-  }
+  })
 }
 </script>
