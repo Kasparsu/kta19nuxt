@@ -15,13 +15,13 @@
 
     <v-list class="transparent">
       <v-list-item
-        v-for="key in keys"
-        :key="key"
+        v-for="key in $store.getters.fullStatisticsKeys"
+        :key="key.key"
       >
-        <v-list-item-title>{{ key }}</v-list-item-title>
+        <v-list-item-title>{{ key.label }}</v-list-item-title>
 
         <v-list-item-subtitle class="text-right">
-          {{ country[key] }}
+          {{ country[key.key] }}
         </v-list-item-subtitle>
       </v-list-item>
     </v-list>
@@ -42,14 +42,7 @@
       props:['country'],
       data () {
         return {
-          keys: [
-            'NewConfirmed',
-            'NewDeaths',
-            'NewRecovered',
-            'TotalConfirmed',
-            'TotalDeaths',
-            'TotalRecovered',
-          ]
+
         }
       },
     }

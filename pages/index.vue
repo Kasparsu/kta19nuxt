@@ -12,18 +12,20 @@
 
 export default {
   created() {
-    this.$axios.$get('https://api.covid19api.com/summary').then((data) => {
-      console.log(data);
-      this.countries = data.Countries;
-    });
+    this.$store.dispatch('getCountries');
   },
   data(){
     return {
-      countries: []
+
     }
   },
   methods: {
 
+  },
+  computed: {
+    countries(){
+      return this.$store.getters.filteredCountries;
+    }
   }
 }
 </script>
